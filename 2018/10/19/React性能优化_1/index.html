@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人博客">
+    <meta name="keyword" content="个人博客">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <title>
+        
+        React性能优化_1 - Yak | yak.kim | Yak&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <span> 一直向前跑, 你总会活成你想要的样子... </span>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg">
+        </div>
+        <div class="name">
+            <span>Yak</span>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li>
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li>
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-使用生产构建"><span class="toc-text">一. 使用生产构建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1）Create-React-App方式"><span class="toc-text">1）Create React App方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2）针对个别工具的优化"><span class="toc-text">2）针对个别工具的优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-使用Chrome-Performance-归档组件"><span class="toc-text">二. 使用Chrome Performance 归档组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-避免重复渲染"><span class="toc-text">三. 避免重复渲染</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-shouldComponentUpdate应用"><span class="toc-text">四. shouldComponentUpdate应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#案例"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-不会突变的数据的力量"><span class="toc-text">五. 不会突变的数据的力量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-使用不可突变的数据结构"><span class="toc-text">六. 使用不可突变的数据结构</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input">
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <span> 一直向前跑, 你总会活成你想要的样子... </span>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        React性能优化_1
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-10-19 12:52:34</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#React" title="React">React</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问量：<span id="busuanzi_value_page_pv"></span>
+</span>
+
+    </div>
+    <div class="post-content ">
+        <p>React内部，使用了许多有趣的技术去减少更新UI的DOM操作消耗。对于很多应用，React可以提供更快的用户界面而不需要特意的去优化。尽管如此，你还是有很多方法去优化你的APP。</p>
+<h3 id="一-使用生产构建"><a href="#一-使用生产构建" class="headerlink" title="一. 使用生产构建"></a>一. 使用生产构建</h3><p>如果你经历过React APP的表现问题，请确认你测试的是压缩过的生产环境版本。默认情况下，React会提供很多有用的预警信息——在开发阶段非常有用。但是它们使React应用变得更大和更慢，所以你需要保证在部署应用的时候使用的是生产版本。如果你不太确定构建过程是否正确，可以通过下载 <a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank" rel="noopener">React开发者工具</a> 在Chrome浏览器中进行检测。</p>
+<h4 id="1）Create-React-App方式"><a href="#1）Create-React-App方式" class="headerlink" title="1）Create React App方式"></a>1）Create React App方式</h4><p>如果你的项目是以<strong>Create React App</strong>创建的，运行如下代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm run build</span><br></pre></td></tr></table></figure>
+<p>这将会在该项目的build/文件夹内创建一个生产版本的应用，注意只有发布项目时才有必要这样做，正常开发时，使用npm start。</p>
+<h4 id="2）针对个别工具的优化"><a href="#2）针对个别工具的优化" class="headerlink" title="2）针对个别工具的优化"></a>2）针对个别工具的优化</h4><p><strong>Brunch</strong></p>
+<p>为了创建最高效的Brunch(<strong>Brunch是一个类似Gulp、Webpack的构建工具，封装的层级更高，使用起来更方便</strong>)生产版本，需要安装 <a href="https://github.com/brunch/uglify-js-brunch" target="_blank" rel="noopener">uglify-js-brunch</a> 插件:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># If you use npm</span></span><br><span class="line">$ npm install --save-dev uglify-js-brunch</span><br><span class="line"></span><br><span class="line">    <span class="comment"># If you use Yarn</span></span><br><span class="line">$ yarn add --dev uglify-js-brunch</span><br></pre></td></tr></table></figure>
+<p>接下来，为了构建生产版本，在build命令后添加-p参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brunch build -p</span><br></pre></td></tr></table></figure>
+<p>注意只有生产版本需要这样操作。不要在开发环境中安装这个插件或者使用-p参数，因为它会隐藏掉有用的React警告并使构建过程更慢。</p>
+<p><strong>Browserify</strong></p>
+<p>为了创建最高效的Browserify生产版本，需要安装一些插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># If you use npm</span></span><br><span class="line">$ npm install --save-dev bundle-collapser envify uglify-js uglifyify </span><br><span class="line"></span><br><span class="line">    <span class="comment"># If you use Yarn</span></span><br><span class="line">$ yarn add --dev bundle-collapser envify uglify-js uglifyify</span><br></pre></td></tr></table></figure>
+<p>为了构建生产版本，务必添加这些设置指令 <strong>(参数很重要)</strong> :</p>
+<ul>
+<li><a href="https://github.com/hughsk/envify" target="_blank" rel="noopener">envify</a> 该插件确保正确的编译环境，全局安装（-g）。</li>
+<li><a href="https://github.com/hughsk/uglifyify" target="_blank" rel="noopener">uglifyify</a> 该插件移除了开发接口/工具。全局安装（-g）。</li>
+<li><a href="https://github.com/substack/bundle-collapser" target="_blank" rel="noopener">bundle-collapser</a> 该插件用数字替代了长长的模块ID。<br>最后，以上结果都被输添加至<a href="https://github.com/mishoo/UglifyJS2" target="_blank" rel="noopener">uglify-js</a>来得到整合。(<a href="https://github.com/hughsk/uglifyify#motivationusage" target="_blank" rel="noopener">了解原因</a>).</li>
+</ul>
+<p>举个例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">browserify ./index.js \</span><br><span class="line">    -g [ envify --NODE_ENV production ] \</span><br><span class="line">    -g uglifyify \</span><br><span class="line">    -p bundle-collapser/plugin \</span><br><span class="line">    | uglifyjs --compress --mangle &gt; ./bundle.js</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意：</strong><br>    包的名称是uglify-js，但是它提供的文件叫uglifyjs。这不是一个错字。</p>
+</blockquote>
+<p><strong>Rollup</strong></p>
+<p>为了创建最高效的Rollup生产版本，需要安装一些插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment"># If you use npm</span></span><br><span class="line">$ npm install --save-dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify </span><br><span class="line"></span><br><span class="line">    <span class="comment"># If you use Yarn</span></span><br><span class="line">$ yarn add --dev rollup-plugin-commonjs rollup-plugin-replace rollup-plugin-uglify</span><br></pre></td></tr></table></figure>
+<p>为了构建生产版本，务必添加这些插件 <strong>(参数很重要)</strong>:</p>
+<ul>
+<li><a href="https://github.com/rollup/rollup-plugin-replace" target="_blank" rel="noopener">replace</a>该插件确保正确的编译环境。</li>
+<li><a href="https://github.com/rollup/rollup-plugin-commonjs" target="_blank" rel="noopener">commonjs</a>该插件在Rollup内提供对CommonJS的支持。</li>
+<li><a href="https://github.com/TrySound/rollup-plugin-uglify" target="_blank" rel="noopener">uglify</a>该插件压缩生成最终版本。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plugins: [</span><br><span class="line"> // ...</span><br><span class="line"> require(<span class="string">'rollup-plugin-replace'</span>)(&#123;</span><br><span class="line">     <span class="string">'process.env.NODE_ENV'</span>: JSON.stringify(<span class="string">'production'</span>)</span><br><span class="line"> &#125;),</span><br><span class="line"> require(<span class="string">'rollup-plugin-commonjs'</span>)(),</span><br><span class="line"> require(<span class="string">'rollup-plugin-uglify'</span>)(),</span><br><span class="line"> // ...</span><br><span class="line"> ]</span><br></pre></td></tr></table></figure>
+<p>查看完整的<a href="https://gist.github.com/Rich-Harris/cb14f4bc0670c47d00d191565be36bf0" target="_blank" rel="noopener">安装例子</a>.</p>
+<p>注意: 只有生产版本需要这样操作。不要在开发环境中安装uglify和replace，因为它们会隐藏掉有用的React警告并使构建过程更慢。</p>
+<p><strong>Webpack</strong></p>
+<blockquote>
+<p><strong>注意：</strong><br>如果你正在使用Create React App方式，参考上述文档。<br>本节只适用于直接配置Webpack的情况。</p>
+</blockquote>
+<p>为了创建最高效的Webpack生产版本，需要在生产版本的配置中添加这些插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">new webpack.DefinePlugin(&#123;</span><br><span class="line">     <span class="string">'process.env'</span>: &#123;</span><br><span class="line">         NODE_ENV: JSON.stringify(<span class="string">'production'</span>)</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;),</span><br><span class="line"> new webpack.optimize.UglifyJsPlugin()</span><br></pre></td></tr></table></figure>
+<p>了解更多参见<a href="https://webpack.js.org/guides/production-build/" target="_blank" rel="noopener">Webpack文档</a>.</p>
+<p>注意: 只有生产版本需要这样操作。不要在开发环境中安装<code>UglifyJsPlugin</code>和<code>DefinePlugin</code>，因为它们会隐藏掉有用的React警告并使构建过程更慢。</p>
+<h3 id="二-使用Chrome-Performance-归档组件"><a href="#二-使用Chrome-Performance-归档组件" class="headerlink" title="二. 使用Chrome Performance 归档组件"></a>二. 使用Chrome Performance 归档组件</h3><p>在<strong>开发模式</strong>下， 在支持的浏览器内使用性能工具可以直观的了解组件何时挂载，更新和卸载。</p>
+<p>例如:</p>
+<p><img src="https://react.docschina.org/static/react-perf-chrome-timeline-64d522b74fb585f1abada9801f85fa9d-dcc89.png" alt="如图1"></p>
+<p>Chrome浏览器内：</p>
+<ul>
+<li><p>在项目地址栏内添加查询字符串<code>?react_per</code>（例如，<code>http://localhost:3000/?react_perf</code>）。</p>
+</li>
+<li><p>打开Chrome开发工具<a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool" target="_blank" rel="noopener">Performance</a>标签页点击<strong>Record</strong>.</p>
+</li>
+<li><p>执行你想要分析的动作。不要记录超过20s，不然Chrome可能会挂起。</p>
+</li>
+<li><p>停止记录。</p>
+</li>
+<li><p>React事件将会被归类在<strong>User Timing</strong>标签下。</p>
+</li>
+</ul>
+<p>更多的详细操作，请参考<a href="https://building.calibreapp.com/debugging-react-performance-with-react-16-and-chrome-devtools-c90698a522ad" target="_blank" rel="noopener">BenSchwarz 的这篇文章</a>。</p>
+<p>注意: <strong>由于这些数字是相对的，因此组件在生产版本中会运行更快。</strong> 然而，这也能够帮助你了解何时会有无关的组件被错误的更新，以及你的组件更新的深度和频率。</p>
+<p>目前浏览器中仅有Chrome，Edge和IE支持此特性，但是我们使用此标准用户<a href="https://developer.mozilla.org/en-US/docs/Web/API/User_Timing_API" target="_blank" rel="noopener">Timing API</a>，因此我们期待更多的浏览器对其添加支持。</p>
+<h3 id="三-避免重复渲染"><a href="#三-避免重复渲染" class="headerlink" title="三. 避免重复渲染"></a>三. 避免重复渲染</h3><p>React在渲染出的UI内部建立和维护了一个内层的实现方式，它包括了从组件返回的React元素。这种实现方式使得React避免了一些不必要的创建和关联DOM节点，因为这样做可能比直接操作JavaScript对象更慢一些。有时它被称之为“虚拟DOM”，但是它其实和React Native的工作方式是一样的。</p>
+<p>当一个组件的<code>props</code>或者<code>state</code>改变时，React通过比较新返回的元素和之前渲染的元素来决定是否有必要更新实际的DOM。当他们不相等时，React会更新DOM。</p>
+<p>在一些情况下，你的组件可以通过重写这个生命周期函数<code>shouldComponentUpdate</code>来提升速度， 它是在重新渲染过程开始前触发的。 这个函数默认返回<code>true</code>，可使React执行更新：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shouldComponentUpdate(nextProps, nextState) &#123;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你知道在某些情况下你的组件不需要更新，你可以在<code>shouldComponentUpdate</code>内返回<code>false</code>来跳过整个渲染进程，该进程包括了对该组件和之后的内容调用<code>render()</code>指令。</p>
+<h3 id="四-shouldComponentUpdate应用"><a href="#四-shouldComponentUpdate应用" class="headerlink" title="四. shouldComponentUpdate应用"></a>四. shouldComponentUpdate应用</h3><p>这是一个组件的子树。对其中每个组件来说，<code>SCU</code>表明了<code>shouldComponentUpdate</code>的返回内容，<code>vDOMEq</code>表明了待渲染的React元素与原始元素是否相等，最后，圆圈的颜色表明这个组件是否需要重新渲染。</p>
+<p><img src="https://react.docschina.org/static/should-component-update-5ee1bdf4779af06072a17b7a0654f6db-9a3ff.png" alt="如图2"></p>
+<p>由于以C2为根的子树的<code>shouldComponentUpdate</code>返回了<code>false</code>，React不会试图渲染C2，甚至不会在C4和C5上调用<code>shouldComponentUpdate</code>。</p>
+<p>对C1和C3来说，<code>shouldComponentUpdate</code>返回了<code>true</code>，因此React会深入到分支中并检查它们。C6的<code>shouldComponentUpdate</code>返回了`true，由于待渲染的元素与原始元素并不相等，React会更新这个DOM节点。</p>
+<p>最后一个有趣的情况是C8，React需要渲染这个组件，但是由于组件元素返回值与原元素相等，因此它并没有更新这个DOM节点。</p>
+<p>注意React只需更新C6，因为它是不可避免的。对C8来说，它通过比较待渲染元素与原始元素避免了渲染，对C2的子树和C7，它们甚至都没有执行比较，因为我们设置了<code>shouldComponentUpdate</code>为<code>false</code>，<code>render</code>没有被调用。</p>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>如果想让组件只在<code>props.color</code>或者<code>state.count</code>的值变化时重新渲染，你可以像下面这样设定<code>shouldComponentUpdate</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class CounterButton extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;count: 1&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  shouldComponentUpdate(nextProps, nextState) &#123;</span><br><span class="line">    <span class="keyword">if</span> (this.props.color !== nextProps.color) &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (this.state.count !== nextState.count) &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;button</span><br><span class="line">        color=&#123;this.props.color&#125;</span><br><span class="line">        onClick=&#123;() =&gt; this.setState(state =&gt; (&#123;count: state.count + 1&#125;))&#125;&gt;</span><br><span class="line">        Count: &#123;this.state.count&#125;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在以上代码中，<code>shouldComponentUpdate</code>只检查<code>props.color</code>和<code>state.count</code>的变化。如果这些值没有变化，组件就不会更新。当你的组件变得更加复杂时，你可以使用类似的模式来做一个“浅比较”，用来比较属性和值以判定是否需要更新组件。这种模式十分常见，因此React提供了一个辅助对象来实现这个逻辑 - 继承自<code>React.PureComponent</code>。以下代码可以更简单的实现相同的操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class CounterButton extends React.PureComponent &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;count: 1&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;button</span><br><span class="line">        color=&#123;this.props.color&#125;</span><br><span class="line">        onClick=&#123;() =&gt; this.setState(state =&gt; (&#123;count: state.count + 1&#125;))&#125;&gt;</span><br><span class="line">        Count: &#123;this.state.count&#125;</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大部分情况下，你可以使用<code>React.PureComponent</code>而不必写你自己的<code>shouldComponentUpdate</code>，它只做一个浅比较。但是由于浅比较会忽略属性或状态突变的情况，此时你不能使用它。</p>
+<p>对于更复杂的数据结构这可能成为一个问题。例如，假设你想要一个<code>ListOfWords</code>组件来渲染一个逗号分隔的单词列表，并使用一个带了点击按钮名字叫WordAdder的父组件来给子列表添加一个单词。<strong><em>以下代码并不正确</em></strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">class ListOfWords extends React.PureComponent &#123;</span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> &lt;div&gt;&#123;this.props.words.join(<span class="string">','</span>)&#125;&lt;/div&gt;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class WordAdder extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      words: [<span class="string">'marklar'</span>]</span><br><span class="line">    &#125;;</span><br><span class="line">    this.handleClick = this.handleClick.bind(this);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">handleClick</span></span>() &#123;</span><br><span class="line">    // This section is bad style and causes a bug</span><br><span class="line">    const words = this.state.words;</span><br><span class="line">    words.push(<span class="string">'marklar'</span>);</span><br><span class="line">    this.setState(&#123;words: words&#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">render</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;button onClick=&#123;this.handleClick&#125; /&gt;</span><br><span class="line">        &lt;ListOfWords words=&#123;this.state.words&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题是<code>PureComponent</code>将会在<code>this.props.words</code>的新旧值之间做一个简单的比较。由于代码中<code>words</code>数组在<code>WordAdder</code>的<code>handleClick</code>方法中被改变了，尽管数组中的实际单词已经改变，<code>this.props.words</code>的新旧值还是相等的，因此即便<code>ListOfWords</code>具有应该被渲染的新单词，它还是不会更新。</p>
+<h3 id="五-不会突变的数据的力量"><a href="#五-不会突变的数据的力量" class="headerlink" title="五. 不会突变的数据的力量"></a>五. 不会突变的数据的力量</h3><p>避免此类问题最简单的方式是避免使用值可能会<strong>突变</strong>的属性或状态。例如，上面例子中的<code>handleClick</code>应该用<code>concat</code>重写成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">handleClick() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(<span class="function"><span class="params">prevState</span> =&gt;</span> (&#123;</span><br><span class="line">        words: prevState.words.concat([<span class="string">'marklar'</span>])</span><br><span class="line">    &#125;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ES6支持数组的<code>spread</code>语法可以让它变得更容易。如果你使用的是<code>Create React App</code>，那么此语法默认可用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">handleClick</span></span>() &#123;</span><br><span class="line">    this.setState(prevState =&gt; (&#123;</span><br><span class="line">        words: [...prevState.words, <span class="string">'marklar'</span>],</span><br><span class="line">    &#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>你也可以用相似的方式重写可以会突变的对象。例如，假设我们有一个叫<code>colormap</code>的对象，我们想写一个把<code>colormap.right</code>改变成<code>&#39;blue&#39;</code>的函数，我们应该写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> updateColorMap(colormap) &#123;</span><br><span class="line">    colormap.right = <span class="string">'blue'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想要实现代码而不污染原始对象，我们可以使用<code>Object.assign</code>方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> updateColorMap(colormap) &#123;</span><br><span class="line">    <span class="built_in">return</span> Object.assign(&#123;&#125;, colormap, &#123;right: <span class="string">'blue'</span>&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>updateColorMap</code>现在会返回一个新对象，而不会改变之前的旧对象。<code>Object.assign</code>在ES6中，需要<code>polyfill</code>支持。</p>
+<p>有一个JavaScript提议来添加<a href="https://github.com/sebmarkbage/ecmascript-rest-spread" target="_blank" rel="noopener">对象spread属性</a>以便不会突然变化的更新对象：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> updateColorMap(colormap) &#123;</span><br><span class="line">    <span class="built_in">return</span> &#123;...colormap, right: <span class="string">'blue'</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用<code>Create React App</code>，默认情况下 <code>Object.assign</code>和<code>spread</code>对象都可以使用。</p>
+<h3 id="六-使用不可突变的数据结构"><a href="#六-使用不可突变的数据结构" class="headerlink" title="六. 使用不可突变的数据结构"></a>六. 使用不可突变的数据结构</h3><p><a href="https://github.com/facebook/immutable-js" target="_blank" rel="noopener">Immutable.js</a>是解决这个问题的另一种方法。它通过结构共享提供不可突变的，持久的集合：</p>
+<ul>
+<li>不可突变:一旦创建，集合就不能在另一个时间点改变。</li>
+<li>持久性:可以使用原始集合和一个突变来创建新的集合。原始集合在新集合创建后仍然可用。</li>
+<li>结构共享:新集合尽可能多的使用原始集合的结构来创建，以便将复制操作降至最少从而提升性能。</li>
+</ul>
+<p>不可突变数据使得变化跟踪很方便。每个变化都会导致产生一个新的对象，因此我们只需检查索引对象是否改变。例如，在这个常见的JavaScript代码中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const x = &#123; foo: <span class="string">'bar'</span> &#125;;</span><br><span class="line">const y = x;</span><br><span class="line">y.foo = <span class="string">'baz'</span>;</span><br><span class="line">x === y; // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>虽然<code>y</code>被编辑了，但是由于它与<code>x</code>索引了相同的对象，这个比较会返回<code>true</code>。你可以使用<code>immutable.js</code>实现类似效果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const SomeRecord = Immutable.Record(&#123; foo: null &#125;);</span><br><span class="line">const x = new SomeRecord(&#123; foo: <span class="string">'bar'</span> &#125;);</span><br><span class="line">const y = x.set(<span class="string">'foo'</span>, <span class="string">'baz'</span>);</span><br><span class="line">x === y; // <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>在这个例子中，<code>x</code>突变后返回了一个新的索引，因此我们可以安全的确认<code>x</code>被改变了。</p>
+<p>还有两个库可以帮助我们使用不可突变数据：<a href="https://github.com/rtfeldman/seamless-immutable" target="_blank" rel="noopener">seamless-immutable</a>和<a href="https://github.com/kolodny/immutability-helper" target="_blank" rel="noopener">immutability-helper</a>。</p>
+<p>实现<code>shouldComponentUpdate</code>时，不可突变的数据结构帮助我们轻松的追踪对象变化。这通常可以提供一个不错的性能提升。</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">微信</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢添加 </p>
+    </div>
+</div>
+        
+        <br>
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <p>
+        <span>&copy; 2018 yak.kim</span>
+    </p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = "true"
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</html>
