@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="个人博客">
+    <meta name="keyword" content="个人博客">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+
+    <title>
+        
+        常用的javascript设计模式 - Yak | yak.kim | Yak&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <span> 一直向前跑, 你总会活成你想要的样子... </span>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar">
+            <img src="/img/avatar.jpg">
+        </div>
+        <div class="name">
+            <span>Yak</span>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li>
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="/archive">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li>
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-什么是设计模式"><span class="toc-text">一. 什么是设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-单体模式："><span class="toc-text">二. 单体模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-单例模式："><span class="toc-text">三. 单例模式：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-观察者模式（发布订阅模式）"><span class="toc-text">四. 观察者模式（发布订阅模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-策略模式"><span class="toc-text">五. 策略模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六-模板模式"><span class="toc-text">六. 模板模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七-代理模式"><span class="toc-text">七. 代理模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八-外观模式"><span class="toc-text">八. 外观模式</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input">
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+        <div class="index-about-mobile">
+            <span> 一直向前跑, 你总会活成你想要的样子... </span>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        常用的javascript设计模式
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2018-11-03 12:52:34</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#JavaScript" title="JavaScript">JavaScript</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问量：<span id="busuanzi_value_page_pv"></span>
+</span>
+
+    </div>
+    <div class="post-content ">
+        <p>设计模式太多了，貌似有23种，其实我们在平时的工作中没有必要特意去用什么样的设计模式，或者你在不经意间就已经用了设计模式当中的一种。本文旨在总结平时相对来说用的比较多的设计模式。</p>
+<h3 id="一-什么是设计模式"><a href="#一-什么是设计模式" class="headerlink" title="一. 什么是设计模式"></a>一. 什么是设计模式</h3><p><strong>百度百科：</strong></p>
+<p>设计模式（Design pattern）是一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结。</p>
+<p>使用设计模式是为了可重用代码、让代码更容易被他人理解、保证代码可靠性。 毫无疑问，设计模式于己于他人于系统都是多赢的；设计模式使代码编制真正工程化；设计模式是软件工程的基石脉络，如同大厦的结构一样。</p>
+<p><strong>实际情况：</strong></p>
+<p>设计模式绝对不是纸上谈兵的知识，光看书就以为自己懂了，那只是井底之蛙之见，设计模式绝对是从实践中来到实践中去的！如果编码经验很少，也不太可能能理解好设计模式，但凡软件设计能力强的人编码功底都是相当扎实的。</p>
+<p>如果没有能深刻理解面向对象，也不太可能理解好设计模式，刚刚毕业或者才工作一两年就说自己面向对象能力强的人，基本上就是夸夸其谈的人。</p>
+<p>很明显，我就是属于那种夸夸其谈的人，哈哈，不过希望对本文的总结，让自己更加了解这些设计模式，理解的更加透彻。</p>
+<h3 id="二-单体模式："><a href="#二-单体模式：" class="headerlink" title="二. 单体模式："></a>二. 单体模式：</h3><p><strong>概念：</strong></p>
+<p>单体是一个用来划分命名空间并将一批相关的属性和方法组织在一起的对象，如果他可以被实例化，那么他只能被实例化一次。</p>
+<p><strong>特点：</strong>　</p>
+<ul>
+<li>可以来划分命名空间，从而清除全局变量所带来的危险。</li>
+<li>利用分支技术来来封装浏览器之间的差异。</li>
+<li>可以把代码组织的更为一体，便于阅读和维护。</li>
+</ul>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/*Basic Singleton*/</span><br><span class="line">var Singleton = &#123;</span><br><span class="line">    attribute:<span class="literal">true</span>,</span><br><span class="line">    method1:<span class="function"><span class="title">function</span></span>()&#123;&#125;,</span><br><span class="line">    method2:<span class="function"><span class="title">function</span></span>()&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>应用场景：</strong></p>
+<p>单体模式在我们平时的应用中用的比较多的，相当于把我们的代码封装在一个起来，只是暴露一个入口，从而避免全部变量的污染。</p>
+<p><strong>工厂模式:</strong></p>
+<p><strong>概念：</strong></p>
+<p>工厂模式的定义：提供创建对象的接口，意思就是根据领导（调用者）的指示（参数），生产相应的产品（对象）。</p>
+<p>创建一个对象常常需要复杂的过程，所以不适合在一个复杂的对象中。</p>
+<p>创建对象可能会导致大量的重复代码，也可能提供不了足够级别的抽象。</p>
+<p>工厂就是把成员对象的创建工作转交给一个外部对象，好处在于消除对象之间的耦合(也就是相互影响)</p>
+<p><strong>分类：</strong></p>
+<ul>
+<li><p><strong>简单工厂模式：</strong>  使用一个类，通常为单体，来生成实例。</p>
+</li>
+<li><p><strong>复杂工厂模式定义：</strong> 将其成员对象的实列化推到子类中，子类可以重写父类接口方法以便创建的时候指定自己的对象类型。父类只对创建过程中的一般性问题进行处理，这些处理会被子类继承，子类之间是相互独立的，具体的业务逻辑会放在子类中进行编写。</p>
+</li>
+</ul>
+<p><strong>代码实现：</strong></p>
+<p>简单工厂模式:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var XMLHttpFactory =<span class="function"><span class="title">function</span></span>()&#123;&#125;;　　　　　　//这是一个简单工厂模式</span><br><span class="line">　　XMLHttpFactory.createXMLHttp =<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">　　　 var XMLHttp = null;</span><br><span class="line">　　　　<span class="keyword">if</span> (window.XMLHttpRequest)&#123;</span><br><span class="line">　　　　　　XMLHttp = new XMLHttpRequest()</span><br><span class="line">　　　 &#125;<span class="keyword">else</span> <span class="keyword">if</span> (window.ActiveXObject)&#123;</span><br><span class="line">　　　　　　XMLHttp = new ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>)</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　<span class="built_in">return</span> XMLHttp;</span><br><span class="line">　　&#125;</span><br><span class="line">　　//XMLHttpFactory.createXMLHttp()这个方法根据当前环境的具体情况返回一个XHR对象。</span><br><span class="line">　　var AjaxHander =<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">　　　　var XMLHttp = XMLHttpFactory.createXMLHttp();</span><br><span class="line">　　　　...</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure>
+<p>复杂工厂模式：流程 =&gt; 先设计一个抽象类，这个类不能被实例化，只能用来派生子类，最后通过对子类的扩展实现工厂方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> XMLHttpFactory =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;　     <span class="comment">//这是一个抽象工厂模式</span></span><br><span class="line"></span><br><span class="line">XMLHttpFactory.prototype = &#123;</span><br><span class="line">　　<span class="comment">//如果真的要调用这个方法会抛出一个错误，它不能被实例化，只能用来派生子类</span></span><br><span class="line">　　createFactory:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  　　<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'This is an abstract class'</span>);</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> XHRHandler =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;; <span class="comment">//定义一个子类</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类继承父类原型方法</span></span><br><span class="line">extend( XHRHandler , XMLHttpFactory );</span><br><span class="line"></span><br><span class="line">XHRHandler.prototype =<span class="keyword">new</span> XMLHttpFactory(); <span class="comment">//把超类原型引用传递给子类,实现继承</span></span><br><span class="line"></span><br><span class="line">XHRHandler.prototype.constructor = XHRHandler; <span class="comment">//重置子类原型的构造器为子类自身</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//重新定义createFactory 方法</span></span><br><span class="line">XHRHandler.prototype.createFactory =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">　　<span class="keyword">var</span> XMLHttp =<span class="literal">null</span>;</span><br><span class="line">　　<span class="keyword">if</span> (<span class="built_in">window</span>.XMLHttpRequest)&#123;</span><br><span class="line"></span><br><span class="line">  　　XMLHttp =<span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">　　&#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.ActiveXObject)&#123;</span><br><span class="line"></span><br><span class="line">  　　XMLHttp =<span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>)</span><br><span class="line">　　&#125;</span><br><span class="line"></span><br><span class="line">　　<span class="keyword">return</span> XMLHttp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>应用场景：</strong></p>
+<p>以下几种情景下工厂模式特别有用：</p>
+<ul>
+<li><p>（1）对象的构建十分复杂</p>
+</li>
+<li><p>（2）需要依赖具体环境创建不同实例</p>
+</li>
+<li><p>（3）处理大量具有相同属性的小对象</p>
+</li>
+</ul>
+<p><strong>优点：</strong></p>
+<p>　　可以实现一些相同的方法，这些相同的方法我们可以放在父类中编写代码，那么需要实现具体的业务逻辑，那么可以放在子类中重写该父类的方法，去实现自己的业务逻辑；</p>
+<p>　　也就是说有两点：　　</p>
+<p>　　1、弱化对象间的耦合，防止代码的重复。在一个方法中进行类的实例化，可以消除重复性的代码。</p>
+<p>　　2、重复性的代码可以放在父类去编写，子类继承于父类的所有成员属性和方法，子类只专注于实现自己的业务逻辑。</p>
+<p><strong>缺点：</strong></p>
+<p>   当工厂增加到一定程度的时候，提升了代码的复杂度，可读性下降。而且没有解决对象的识别问题，即怎么知道一个对象的类型。</p>
+<h3 id="三-单例模式："><a href="#三-单例模式：" class="headerlink" title="三. 单例模式："></a>三. 单例模式：</h3><p><strong>概念：</strong></p>
+<p>　　单例模式定义了一个对象的创建过程，此对象只有一个单独的实例，并提供一个访问它的全局访问点。也可以说单例就是保证一个类只有一个实例，实现的方法一般是先判断实例存在与否，如果存在直接返回，如果不存在就创建了再返回，这就确保了一个类只有一个实例对象。</p>
+<p><strong>代码实现：</strong></p>
+<p>　   单例的实现有很多种，下面只介绍其中的一种，使用闭包方式来实现单例，代码如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> single = (<span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">var</span> unique;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">　　　　<span class="comment">// 如果该实例存在，则直接返回，否则就对其实例化</span></span><br><span class="line">        <span class="keyword">if</span>( unique === <span class="literal">undefined</span> )&#123;</span><br><span class="line">            unique = <span class="keyword">new</span> Construct();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> unique;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// ... 生成单例的构造函数的代码</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        getInstance : getInstance</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，unique便是返回对象的引用，而 getInstance便是静态方法获得实例。Construct 便是创建实例的构造函数。</p>
+<pre><code>可以通过 single.getInstance() 来获取到单例，并且每次调用均获取到同一个单例。这就是 单例模式 所实现的效果。
+</code></pre><p><strong>使用场景：</strong></p>
+<p>单例模式是一种常用的模式，有一些对象我们往往只需要一个，比如全局缓存、浏览器的window对象。在js开发中，单例模式的用途同样非常广泛。试想一下，当我们</p>
+<p>单击登录按钮的时候，页面中会出现一个登录框，而这个浮窗是唯一的，无论单击多少次登录按钮，这个浮窗只会被创建一次。因此这个登录浮窗就适合用单例模式。</p>
+<p>总结一下它的使用场景：</p>
+<p>1、可以用它来划分命名空间</p>
+<p>2、借助单例模式，可以把代码组织的更为一致，方便阅读与维护</p>
+<h3 id="四-观察者模式（发布订阅模式）"><a href="#四-观察者模式（发布订阅模式）" class="headerlink" title="四. 观察者模式（发布订阅模式）"></a>四. 观察者模式（发布订阅模式）</h3><p><strong>概念：</strong></p>
+<p>　　定义对象间的一种一对多的依赖关系，以便当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并自动刷新，也被称为是发布订阅模式。</p>
+<p>它需要一种高级的抽象策略，以便订阅者能够彼此独立地发生改变，而发行方能够接受任何有消费意向的订阅者。</p>
+<p><strong>应用场景：</strong>　　</p>
+<p>　　这个模式要先说应用场景，比较好理解。</p>
+<p>　　打一个离我们比较近的一个场景，博客园里面有一个订阅的按钮（貌似有bug），比如小A,小B,小C都订阅了我的博客，当我的博客一有更新时，就会统一发布邮件给他们这三个人，就会通知这些订阅者</p>
+<p>　　发布订阅模式的流程如下：</p>
+<p>1、确定谁是发布者(比如我的博客)。</p>
+<p>2、然后给发布者添加一个缓存列表，用于存放回调函数来通知订阅者。</p>
+<p>3、发布消息，发布者需要遍历这个缓存列表，依次触发里面存放的订阅者回调函数。</p>
+<p>4、退订（比如不想再接收到这些订阅的信息了，就可以取消掉）</p>
+<p><strong>代码如下：</strong></p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> pubsub = &#123;&#125;;   <span class="comment">// 定义发布者</span></span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">q</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> <span class="built_in">list</span> = [],  <span class="comment">//回调函数存放的数组，也就是记录有多少人订阅了我们东西</span></span><br><span class="line">        subUid = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发布消息,遍历订阅者</span></span><br><span class="line">    q.publish = <span class="function"><span class="keyword">function</span> (<span class="params">type, content</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// type 为文章类型，content为文章内容</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 如果没有人订阅，直接返回</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">list</span>[type]) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> subscribers = <span class="built_in">list</span>[type],</span><br><span class="line">                len = subscribers ? <span class="attribute">subscribers.length</span> : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (len--) &#123;</span><br><span class="line">                <span class="comment">// 将内容注入到订阅者那里</span></span><br><span class="line">                subscribers[len].func(type, content);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//订阅方法，由订阅者来执行</span></span><br><span class="line">    q.subscribe = <span class="function"><span class="keyword">function</span> (<span class="params">type, func</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 如果之前没有订阅过</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="built_in">list</span>[type]) &#123;</span><br><span class="line">            <span class="built_in">list</span>[type] = [];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// token相当于订阅者的id，这样的话如果退订，我们就可以针对它来知道是谁退订了。</span></span><br><span class="line">        <span class="keyword">var</span> token = (++subUid).toString();</span><br><span class="line">        <span class="comment">// 每订阅一个，就把它存入到我们的数组中去</span></span><br><span class="line">        <span class="built_in">list</span>[type].push(&#123;</span><br><span class="line">            <span class="attribute">token</span>: token,</span><br><span class="line">            <span class="attribute">func</span>: func</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> token;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//退订方法</span></span><br><span class="line">    q.unsubscribe = <span class="function"><span class="keyword">function</span> (<span class="params">token</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> m <span class="keyword">in</span> <span class="built_in">list</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">list</span>[m]) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, j = <span class="built_in">list</span>[m].length; i &lt; j; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="built_in">list</span>[m][i].token === token) &#123;</span><br><span class="line">                        <span class="built_in">list</span>[m].splice(i, <span class="number">1</span>);</span><br><span class="line">                        <span class="keyword">return</span> token;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125; (pubsub));</span><br><span class="line"></span><br><span class="line"><span class="comment">//将订阅赋值给一个变量，以便退订</span></span><br><span class="line"><span class="keyword">var</span> girlA = pubsub.subscribe(<span class="string">'js类的文章'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type, content</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'girlA订阅的'</span>+type + <span class="string">": 内容内容为："</span> + content);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> girlB = pubsub.subscribe(<span class="string">'js类的文章'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type, content</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'girlB订阅的'</span>+type + <span class="string">": 内容内容为："</span> + content);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">var</span> girlC = pubsub.subscribe(<span class="string">'js类的文章'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">type, content</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'girlC订阅的'</span>+type + <span class="string">": 内容内容为："</span> + content);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//发布通知</span></span><br><span class="line">pubsub.publish(<span class="string">'js类的文章'</span>, <span class="string">'关于js的内容'</span>);  </span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// girlC订阅的js类的文章: 内容内容为：关于js的内容</span></span><br><span class="line"><span class="comment">// test3.html:78 girlB订阅的js类的文章: 内容内容为：关于js的内容</span></span><br><span class="line"><span class="comment">// test3.html:75 girlA订阅的js类的文章: 内容内容为：关于js的内容</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//girlA退订了关于js类的文章 </span></span><br><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    pubsub.unsubscribe(girlA);</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//再发布一次，验证一下是否还能够输出信息</span></span><br><span class="line">pubsub.publish(<span class="string">'js类的文章'</span>, <span class="string">"关于js的第二篇文章"</span>);</span><br><span class="line"><span class="comment">// 输出：</span></span><br><span class="line"><span class="comment">// girlB订阅的js类的文章: 内容内容为：关于js的第二篇文章</span></span><br><span class="line"><span class="comment">// girlC订阅的js类的文章: 内容内容为：关于js的第二篇文章</span></span><br></pre></td></tr></table></figure>
+<p>代码可以自己运行一遍，这样比较好理解</p>
+<p><strong>优缺点：</strong></p>
+<p>　　优点：当我们需要维护相关对象的一致性的时候，使用观察者模式，，就可以避免对象之间的紧密耦合。例如，一个对象可以通知另外一个对象，而不需要知道这个对象的信息。</p>
+<p>　　缺点：在发布/订阅模式中，如果我们需要将发布者同订阅者上解耦，将会在一些情况下，导致很难确保我们应用中的特定部分按照我们预期的那样正常工作。也就是说它的优点也可能是它的缺点</p>
+<h3 id="五-策略模式"><a href="#五-策略模式" class="headerlink" title="五. 策略模式"></a>五. 策略模式</h3><p><strong>概念：</strong></p>
+<p>策略模式指的是定义一些列的算法，把他们一个个封装起来，目的就是将算法的使用与算法的实现分离开来。说白了就是以前要很多判断的写法，现在把判断里面的内容抽离开来，变成一个个小的个体。</p>
+<p><strong>代码实现：</strong></p>
+<p>代码情景为超市促销，vip为5折，老客户3折，普通顾客没折，计算最后需要支付的金额。</p>
+<p>没有使用策略模式的情况：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Price</span><span class="params">(personType, price)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//vip 5 折</span></span><br><span class="line">    <span class="keyword">if</span> (personType == <span class="string">'vip'</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> price * <span class="number">0.5</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (personType == <span class="string">'old'</span>)&#123; <span class="comment">//老客户 3 折</span></span><br><span class="line">        <span class="keyword">return</span> price * <span class="number">0.3</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> price; <span class="comment">//其他都全价</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不足之处：不好的地方，当我有其他方面的折扣时，又或者我活动的折扣时经常变化的，这样就要不断的修改if..else里面的条件了。而且也违背了设计模式的一个原则：对修改关闭，对扩展开放的原则；</p>
+<p>使用策略模式后:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对于vip客户</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vipPrice</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.discount = <span class="number">0.5</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">vipPrice.prototype.getPrice = <span class="function"><span class="keyword">function</span>(<span class="params">price</span>) </span>&#123;</span><br><span class="line">　　<span class="keyword">return</span> price * <span class="keyword">this</span>.discount;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 对于老客户</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">oldPrice</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.discount = <span class="number">0.3</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">oldPrice.prototype.getPrice = <span class="function"><span class="keyword">function</span>(<span class="params">price</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> price * <span class="keyword">this</span>.discount;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 对于普通客户</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Price</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.discount = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Price.prototype.getPrice = <span class="function"><span class="keyword">function</span>(<span class="params">price</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> price ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上下文，对于客户端的使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Context</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">this</span>.strategy = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.price = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Context.prototype.set = <span class="function"><span class="keyword">function</span>(<span class="params">name, strategy, price</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    <span class="keyword">this</span>.price = price;</span><br><span class="line">&#125;</span><br><span class="line">Context.prototype.getResult = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name + <span class="string">' 的结账价为: '</span> + <span class="keyword">this</span>.strategy.getPrice(<span class="keyword">this</span>.price));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> context = <span class="keyword">new</span> Context();</span><br><span class="line"><span class="keyword">var</span> vip = <span class="keyword">new</span> vipPrice();</span><br><span class="line">context.set (<span class="string">'vip客户'</span>, vip, <span class="number">200</span>);</span><br><span class="line">context.getResult();   <span class="comment">// vip客户 的结账价为: 100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> old = <span class="keyword">new</span> oldPrice();</span><br><span class="line">context.set (<span class="string">'老客户'</span>, old, <span class="number">200</span>);</span><br><span class="line">context.getResult();  <span class="comment">// 老客户 的结账价为: 60</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> Price = <span class="keyword">new</span> Price();</span><br><span class="line">context.set (<span class="string">'普通客户'</span>, Price, <span class="number">200</span>);</span><br><span class="line">context.getResult();  <span class="comment">// 普通客户 的结账价为: 200</span></span><br></pre></td></tr></table></figure>
+<p>通过策略模式，使得客户的折扣与算法解藕，又使得修改跟扩展能独立的进行，不影到客户端或其他算法的使用；</p>
+<p><strong>使用场景：</strong></p>
+<p>　　策略模式最实用的场合就是某个“类”中包含有大量的条件性语句，比如if…else 或者 switch。每一个条件分支都会引起该“类”的特定行为以不同的方式作出改变。以其维</p>
+<p>护一段庞大的条件性语句，不如将每一个行为划分为多个独立的对象。每一个对象被称为一个策略。设置多个这种策略对象，可以改进我们的代码质量，也更好的进行单元测试。</p>
+<h3 id="六-模板模式"><a href="#六-模板模式" class="headerlink" title="六. 模板模式"></a>六. 模板模式</h3><p><strong>概念：</strong></p>
+<p>定义了一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。<br>通俗的讲，就是将一些公共方法封装到父类，子类可以继承这个父类，并且可以在子类中重写父类的方法，从而实现自己的业务逻辑。</p>
+<p><strong>代码实现：</strong></p>
+<p>比如前端面试，基本包括笔试，技术面试，领导面试，HR面试等，但是每个公司的笔试题，技术面可能不一样，也可能一样，一样的就继承父类的方法，不一样的就重写父类的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Interview = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="comment">// 笔试</span></span><br><span class="line">Interview.prototype.writtenTest = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"这里是前端笔试题"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 技术面试</span></span><br><span class="line">Interview.prototype.technicalInterview = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"这里是技术面试"</span>);</span><br><span class="line">&#125;; </span><br><span class="line"><span class="comment">// 领导面试</span></span><br><span class="line">Interview.prototype.leader = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"领导面试"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 领导面试</span></span><br><span class="line">Interview.prototype.HR = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"HR面试"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 等通知</span></span><br><span class="line">Interview.prototype.waitNotice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"等通知啊，不知道过了没有哦"</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 代码初始化</span></span><br><span class="line">Interview.prototype.init = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.writtenTest();</span><br><span class="line">    <span class="keyword">this</span>.technicalInterview();</span><br><span class="line">    <span class="keyword">this</span>.leader();</span><br><span class="line">    <span class="keyword">this</span>.HR();</span><br><span class="line">    <span class="keyword">this</span>.waitNotice();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阿里巴巴的笔试和技术面不同，重写父类方法，其他继承父类方法。</span></span><br><span class="line"><span class="keyword">var</span> AliInterview = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">AliInterview.prototype = <span class="keyword">new</span> Interview();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子类重写方法 实现自己的业务逻辑</span></span><br><span class="line">AliInterview.prototype.writtenTest = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"阿里的技术题就是难啊"</span>);</span><br><span class="line">&#125;</span><br><span class="line">AliInterview.prototype.technicalInterview = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"阿里的技术面就是叼啊"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> AliInterview = <span class="keyword">new</span> AliInterview();</span><br><span class="line">AliInterview.init();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 阿里的技术题就是难啊</span></span><br><span class="line"><span class="comment">// 阿里的技术面就是叼啊</span></span><br><span class="line"><span class="comment">// 领导面试</span></span><br><span class="line"><span class="comment">// HR面试</span></span><br><span class="line"><span class="comment">// 等通知啊，不知道过了没有哦</span></span><br></pre></td></tr></table></figure>
+<p><strong>应用场景：</strong></p>
+<p>　　模板模式主要应用在一些代码刚开要一次性实现不变的部分。但是将来页面有修改，需要更改业务逻辑的部分或者重新添加新业务的情况。主要是通过子类来改写父类的情况，其他不需要改变的部分继承父类。</p>
+<h3 id="七-代理模式"><a href="#七-代理模式" class="headerlink" title="七. 代理模式"></a>七. 代理模式</h3><p><strong>概念：</strong></p>
+<p>代理模式的中文含义就是帮别人做事，javascript的解释为：把对一个对象的访问, 交给另一个代理对象来操作.</p>
+<p><strong>代码实现：</strong></p>
+<p>　  比如我们公司的补打卡是最后是要交给大boss来审批的，但是公司那么多人，每天都那么多补打卡，那大boss岂不是被这些琐事累死。所以大boss下会有一个助理，来帮忙做这个审批，最后再将每个月的补打卡统一交给大boss看看就行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 补打卡事件</span></span><br><span class="line"><span class="keyword">var</span> fillOut = <span class="function"><span class="keyword">function</span> (<span class="params">lateDate</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.lateDate = lateDate;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是bigBoss</span></span><br><span class="line"><span class="keyword">var</span> bigBoss = <span class="function"><span class="keyword">function</span> (<span class="params">fillOut</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.state = <span class="function"><span class="keyword">function</span> (<span class="params">isSuccess</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"忘记打卡的日期为："</span> + fillOut.lateDate + <span class="string">", 补打卡状态："</span> + isSuccess);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 助理代理大boss 完成补打卡审批</span></span><br><span class="line"><span class="keyword">var</span> proxyAssis = <span class="function"><span class="keyword">function</span> (<span class="params">fillOut</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.state = <span class="function"><span class="keyword">function</span> (<span class="params">isSuccess</span>) </span>&#123;</span><br><span class="line">        (<span class="keyword">new</span> bigBoss(fillOut)).state(isSuccess); <span class="comment">// 替bigBoss审批</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用方法：</span></span><br><span class="line"><span class="keyword">var</span> proxyAssis = <span class="keyword">new</span> proxyAssis(<span class="keyword">new</span> fillOut(<span class="string">"2016-9-11"</span>));</span><br><span class="line">proxyAssis.state(<span class="string">"补打卡成功"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 忘记打卡的日期为：2016-9-11, 补打卡状态：补打卡成功</span></span><br></pre></td></tr></table></figure>
+<p><strong>应用场景：</strong></p>
+<p>　　比如图片的懒加载，我们就可以运用这种技术。在图片未加载完成之前，给个loading图片，加载完成后再替换成实体路径。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myImage = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> imgNode = <span class="built_in">document</span>.createElement(<span class="string">"img"</span>);</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(imgNode);</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">src</span>)</span>&#123;</span><br><span class="line">        imgNode.src = src; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="comment">// 代理模式</span></span><br><span class="line"><span class="keyword">var</span> ProxyImage = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        myImage(<span class="keyword">this</span>.src);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">                <span class="comment">// 占位图片loading</span></span><br><span class="line">                myImage(<span class="string">"http://img.lanrentuku.com/img/allimg/1212/5-121204193Q9-50.gif"</span>);</span><br><span class="line">        img.src = src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"><span class="comment">// 调用方式</span></span><br><span class="line"></span><br><span class="line">ProxyImage(<span class="string">"https://img.alicdn.com/tps/i4/TB1b_neLXXXXXcoXFXXc8PZ9XXX-130-200.png"</span>); <span class="comment">// 真实要展示的图片</span></span><br></pre></td></tr></table></figure>
+<p>当然，这种懒加载方法不用代理模式也是可以实现的，只是用代理模式。我们可以让 myImage 只做一件事，只负责将实际图片加入到页面中，而loading图片交给ProxyImage去做。从而降低代码的耦合度。因为当我不想用loading的时候，可以直接调用myImage 方法。也即是说假如我门不需要代理对象的话，直接可以换成本体对象调用该方法即可。</p>
+<h3 id="八-外观模式"><a href="#八-外观模式" class="headerlink" title="八. 外观模式"></a>八. 外观模式</h3><p><strong>概念：</strong></p>
+<p>　　外观模式是很常见。其实它就是通过编写一个单独的函数，来简化对一个或多个更大型的，可能更为复杂的函数的访问。也就是说可以视外观模式为一种简化某些内容的手段。</p>
+<p>　　说白了，外观模式就是一个函数，封装了复杂的操作。</p>
+<p><strong>代码实现：</strong></p>
+<p>　　比如一个跨浏览器的ajax调用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajaxCall</span>(<span class="params">type,url,callback,data</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 根据当前浏览器获取对ajax连接对象的引用</span></span><br><span class="line">    <span class="keyword">var</span> xhr=(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 所有现代浏览器所使用的标准方法</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 较老版本的internet Explorer兼容</span></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP.6.0"</span>);</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ActiveXObject(<span class="string">"Msxml2.XMLHTTP.3.0"</span>);</span><br><span class="line">            </span><br><span class="line">        &#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ActiveXObject(<span class="string">"Microsoft.XMLHTTP"</span>);</span><br><span class="line">            </span><br><span class="line">        &#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果没能找到相关的ajax连接对象，则跑出一个错误。</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"Ajax not support in this browser."</span>)</span><br><span class="line"></span><br><span class="line">    &#125;()),</span><br><span class="line">    STATE_LOADED=<span class="number">4</span>,</span><br><span class="line">    STATUS_OK=<span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 一但从服务器收到表示成功的相应消息，则执行所给定的回调方法</span></span><br><span class="line">    xhr.onreadystatechange=<span class="function"><span class="keyword">function</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(xhr.readyState !==STATE_LOADED)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(xhr.state==STATUS_OK)&#123;</span><br><span class="line">            callback(xhr.responseText);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用浏览器的ajax连接对象来向所给定的URL发出相关的调用</span></span><br><span class="line">    xhr.open(type.toUpperCase(),url);</span><br><span class="line">    xhr.send(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用方法</span></span><br><span class="line">ajaxCall(<span class="string">"get"</span>,<span class="string">"/user/12345"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">rs</span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'收到的数据为：'</span>+rs);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>应用场景：</p>
+<p>　　当需要通过一个单独的函数或方法来访问一系列的函数或方法调用，以简化代码库的其余内容，使得代码更容易跟踪管理或者更好的维护时，可以使用外观模式。其实我们平时代码中这种模式应该是用的比较多的。</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">微信</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢添加 </p>
+    </div>
+</div>
+        
+        <br>
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+    </div>
+</div>
+    </div>
+</div>
+
+
+<footer class="footer">
+    <p>
+        <span>&copy; 2018 yak.kim</span>
+    </p>
+</footer>
+
+
+
+
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = "true"
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</html>
