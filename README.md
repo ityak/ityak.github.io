@@ -1,2 +1,2 @@
 # ityak.github.io
-My personnel Blog.
+My personnel Blog
